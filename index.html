@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Equipamentos XD — Mercado Libre</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow:#FFF8DC;
+  --yellow-mid:#F5E97A;
+  --yellow-dark:#E8D98A;
+  --yellow-light:#FFFDF0;
+  --blue:#2C3E6B;
+  --blue-dark:#1E2D52;
+  --blue-deeper:#15203D;
+  --blue-light:#EEF2FF;
+  --blue-mid:#C5CFEA;
+  --dark:#1A1A2E;
+  --text:#333333;
+  --gray:#717171;
+  --gray-light:#F5F5F5;
+  --border:#EBEBEB;
+  --white:#FFFFFF;
+  --green:#2E7D5E;
+  --green-light:#E8F5EE;
+  --orange:#C4631A;
+  --orange-light:#FDF0E6;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #EDEAE3;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+header {
+  background: var(--yellow);
+  height: 60px;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--yellow-dark);
+}
+
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+
+.logo-mark {
+  width: 36px; height: 36px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.logo-mark svg { width: 20px; height: 20px; }
+
+.logo-name {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--blue-deeper);
+  letter-spacing: -0.3px;
+}
+
+.logo-sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+.badge-ops {
+  background: var(--blue);
+  color: var(--yellow-mid);
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.hero {
+  background: var(--yellow);
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  border-bottom: 2px solid var(--yellow-dark);
+}
+
+.hero::before { display: none; }
+
+.hero-tag {
+  display: inline-block;
+  background: var(--blue);
+  color: var(--yellow-mid);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 800;
+  color: var(--blue-deeper);
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.hero p {
+  font-size: 14px;
+  color: var(--blue-dark);
+  opacity: 0.8;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 780px) { .layout { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.card + .card { margin-top: 16px; }
+
+.card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-icon {
+  width: 32px; height: 32px;
+  background: var(--yellow-light);
+  border: 1px solid var(--yellow-dark);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+
+.card-header h2 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.card-header p { font-size: 11px; color: var(--gray); margin-top: 1px; }
+
+.card-body { padding: 1.25rem; }
+
+.sec-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 12px;
+  margin-top: 4px;
+}
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+.field { margin-bottom: 1rem; }
+.field:last-child { margin-bottom: 0; }
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+label .hint { font-weight: 400; color: var(--gray); }
+
+input[type="number"], select {
+  width: 100%;
+  height: 40px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="number"]:focus, select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(44,62,107,0.1);
+}
+
+.select-wrap { position: relative; }
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--gray);
+  pointer-events: none;
+}
+
+.range-row { display: flex; align-items: center; gap: 10px; }
+
+input[type="range"] {
+  flex: 1; height: 4px;
+  -webkit-appearance: none; appearance: none;
+  background: var(--border); border-radius: 2px; outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.range-val { font-size: 13px; font-weight: 600; color: var(--blue); min-width: 38px; text-align: right; }
+
+.btn-calc {
+  width: 100%;
+  height: 48px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  margin-top: 1.25rem;
+  letter-spacing: 0.2px;
+}
+
+.btn-calc:hover { background: var(--blue-dark); }
+.btn-calc:active { transform: scale(0.99); }
+
+.results-sticky { position: sticky; top: 76px; }
+
+.result-header {
+  background: var(--blue);
+  padding: 1.5rem;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+}
+
+.result-header .r-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+
+.result-header .r-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--yellow-mid);
+}
+
+.equip-list { padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 8px; }
+
+.equip-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--gray-light);
+  border: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.equip-row:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+
+.equip-info { display: flex; flex-direction: column; gap: 2px; }
+.equip-name { font-size: 13px; font-weight: 600; color: var(--dark); }
+.equip-proc { font-size: 11px; color: var(--gray); }
+
+.equip-qty {
+  font-family: 'Raleway', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--blue);
+  min-width: 48px;
+  text-align: right;
+}
+
+.equip-qty.zero { color: var(--border); }
+
+.equip-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 2px 0;
+}
+
+.equip-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding: 4px 2px 0;
+}
+
+.empty-state {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--gray);
+}
+
+.empty-icon { font-size: 32px; margin-bottom: 10px; }
+.empty-state p { font-size: 13px; line-height: 1.6; color: var(--gray); }
+
+.alert {
+  margin: 0 1.25rem 1rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  display: flex;
+  gap: 8px;
+}
+
+.alert.warning { background: var(--orange-light); border: 1px solid #FFCCAA; color: #7A3C0A; }
+.alert.info { background: var(--blue-light); border: 1px solid var(--blue-mid); color: var(--blue-deeper); }
+
+.premissas-wrap { margin-top: 16px; }
+
+.premissas-btn {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s;
+}
+
+.premissas-btn:hover { background: var(--gray-light); }
+
+.premissas-body {
+  display: none;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 1rem 1.25rem;
+  gap: 8px;
+}
+
+.premissas-body.open { display: grid; grid-template-columns: 1fr 1fr; }
+
+.prem-item { background: var(--gray-light); border-radius: 6px; padding: 8px 10px; }
+.prem-key { font-size: 10px; color: var(--gray); margin-bottom: 2px; }
+.prem-val { font-size: 13px; font-weight: 600; color: var(--dark); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate { animation: fadeUp 0.25s ease forwards; }
+
+.lang-link { font-size: 12px; font-weight: 600; color: var(--blue-deeper); text-decoration: none; background: rgba(255,255,255,0.7); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--yellow-dark); transition: background .15s; }
+.lang-link:hover { background: white; }
+.btn-voltar { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--blue-deeper); text-decoration: none; background: rgba(255,255,255,0.7); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--yellow-dark); transition: background .15s; }
+.btn-voltar:hover { background: white; }
+.hero-title-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.hero-ml-icon { width: 46px; height: 46px; background: var(--blue); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.hero-ml-icon svg { width: 26px; height: 26px; }
+.hero h1 { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="6.5" r="3.5" fill="#F5E97A"/>
+        <path d="M2.5 17.5c0-4.142 3.358-7.5 7.5-7.5s7.5 3.358 7.5 7.5" stroke="#F5E97A" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-name">Mercado Libre</div>
+      <div class="logo-sub">Ferramentas Internas</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <a class="btn-voltar" href="https://mtmtransportes-paginainicialpt.vercel.app/">← Página inicial</a>
+    <a class="lang-link" href="https://mtmtransportes-calculadoraequipamientosxdes.vercel.app/">🇪🇸 Español</a>
+    <span class="badge-ops">XD — Cross Docking</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">Planejamento Operacional</div>
+  <div class="hero-title-wrap">
+    <div class="hero-ml-icon">
+      <svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="8" r="4.5" fill="#F5E97A"/><path d="M2 24c0-6.075 4.925-11 11-11s11 4.925 11 11" stroke="#F5E97A" stroke-width="2.5" stroke-linecap="round"/></svg>
+    </div>
+    <h1>Calculadora de Equipamentos XD</h1>
+  </div>
+  <p>Estime a quantidade de equipamentos necessários para operação de Cross Docking com base no volume e layout da sua operação.</p>
+</div>
+
+<div class="container">
+  <div class="layout">
+
+    <div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📦</div>
+          <div>
+            <h2>Dados operacionais</h2>
+            <p>Parâmetros gerais do Cross Docking</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="sec-label">Volume e composição</div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Volume total <span class="hint">(pacotes/dia)</span></label>
+              <input type="number" id="volumeTotal" value="170000" min="1">
+            </div>
+            <div class="field">
+              <label>% Volumosos <span class="hint">(Large)</span></label>
+              <div class="range-row">
+                <input type="range" id="pctVolumosoSlider" min="0" max="50" value="10" step="1"
+                  oninput="syncRange('pctVolumosoSlider','pctVolumoso','pctVolumosoVal','%')">
+                <span class="range-val" id="pctVolumosoVal">10%</span>
+              </div>
+              <input type="hidden" id="pctVolumoso" value="10">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Pacotes/Baker GM</label>
+              <input type="number" id="pacotesBakerGM" value="80" min="1">
+            </div>
+            <div class="field">
+              <label>Pacotes/Baker Large</label>
+              <input type="number" id="pacotesBakerLarge" value="10" min="1">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>% Inhub — hora pico</label>
+            <div class="range-row">
+              <input type="range" id="pctPicoSlider" min="10" max="80" value="40" step="1"
+                oninput="syncRange('pctPicoSlider','pctPico','pctPicoVal','%')">
+              <span class="range-val" id="pctPicoVal">40%</span>
+            </div>
+            <input type="hidden" id="pctPico" value="40">
+          </div>
+
+          <hr class="divider">
+          <div class="sec-label">Infraestrutura — Inhub</div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Docas / Muelles</label>
+              <input type="number" id="qtdDock" value="10" min="1">
+            </div>
+            <div class="field">
+              <label>Plazas internas</label>
+              <input type="number" id="qtdPlaza" value="60" min="1">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔀</div>
+          <div>
+            <h2>Análise Flow — Sorteo GM</h2>
+            <p>Identificar no layout as ilhas de cada tipo</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="sec-label">Flow 3×2</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Ilhas com 1 Flow 3×2</label>
+              <input type="number" id="ilha1f3x2" value="10" min="0">
+            </div>
+            <div class="field">
+              <label>Ilhas com 2 Flow 3×2</label>
+              <input type="number" id="ilha2f3x2" value="10" min="0">
+            </div>
+          </div>
+
+          <hr class="divider">
+          <div class="sec-label">Flow 2×2</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Ilhas com 1 Flow 2×2</label>
+              <input type="number" id="ilha1f2x2" value="10" min="0">
+            </div>
+            <div class="field">
+              <label>Ilhas com 2 Flow 2×2</label>
+              <input type="number" id="ilha2f2x2" value="10" min="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📐</div>
+          <div>
+            <h2>Sorteo Large — Ondas</h2>
+            <p>Ilhas e Baker por onda no layout</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field" style="margin-bottom:8px">
+            <label>Banda motorizada para Large?</label>
+            <div class="select-wrap">
+              <select id="bandaLarge">
+                <option value="sim">Sim</option>
+                <option value="nao" selected>Não</option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <div style="display:grid; grid-template-columns: auto 1fr 1fr; gap:8px 12px; align-items:center; margin-bottom:8px">
+            <div style="font-size:11px;font-weight:700;color:var(--gray);letter-spacing:1px;text-transform:uppercase">Onda</div>
+            <div style="font-size:11px;font-weight:700;color:var(--gray);letter-spacing:1px;text-transform:uppercase">Nº de ilhas</div>
+            <div style="font-size:11px;font-weight:700;color:var(--gray);letter-spacing:1px;text-transform:uppercase">Baker/ilha</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: auto 1fr 1fr; gap:8px 12px; align-items:center">
+            <span style="font-size:13px;font-weight:500;white-space:nowrap">Onda 1</span>
+            <input type="number" id="onda1ilhas" value="1" min="0">
+            <input type="number" id="onda1baker" value="24" min="0">
+
+            <span style="font-size:13px;font-weight:500;white-space:nowrap">Onda 2</span>
+            <input type="number" id="onda2ilhas" value="1" min="0">
+            <input type="number" id="onda2baker" value="24" min="0">
+
+            <span style="font-size:13px;font-weight:500;white-space:nowrap">Onda 3</span>
+            <input type="number" id="onda3ilhas" value="1" min="0">
+            <input type="number" id="onda3baker" value="24" min="0">
+
+            <span style="font-size:13px;font-weight:500;white-space:nowrap">Onda 4</span>
+            <input type="number" id="onda4ilhas" value="1" min="0">
+            <input type="number" id="onda4baker" value="24" min="0">
+
+            <span style="font-size:13px;font-weight:500;white-space:nowrap">Onda 5</span>
+            <input type="number" id="onda5ilhas" value="0" min="0">
+            <input type="number" id="onda5baker" value="0" min="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🚛</div>
+          <div>
+            <h2>Carga / Descarga BULKY</h2>
+            <p>Parâmetros para carrito de elevação</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-row">
+            <div class="field">
+              <label>Volume BULKY total</label>
+              <input type="number" id="volBulky" value="300" min="0">
+            </div>
+            <div class="field">
+              <label>% recepção interna</label>
+              <div class="range-row">
+                <input type="range" id="pctBulkySlider" min="0" max="100" value="20" step="1"
+                  oninput="syncRange('pctBulkySlider','pctBulky','pctBulkyVal','%')">
+                <span class="range-val" id="pctBulkyVal">20%</span>
+              </div>
+              <input type="hidden" id="pctBulky" value="20">
+            </div>
+          </div>
+          <div class="field">
+            <label>Produtividade carrito <span class="hint">(shp/hr)</span></label>
+            <input type="number" id="prodCarrito" value="33" min="1">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-calc" onclick="calcular()">Calcular equipamentos →</button>
+
+      <div class="premissas-wrap">
+        <button class="premissas-btn" onclick="togglePremissas(this)">
+          <span>📋 Premissas fixas utilizadas</span>
+          <span id="prem-icon">▼</span>
+        </button>
+        <div class="premissas-body" id="premissas-body">
+          <div class="prem-item"><div class="prem-key">Flow Large — Espaço HU-HU</div><div class="prem-val">1,7</div></div>
+          <div class="prem-item"><div class="prem-key">Flow Large — Largo flow</div><div class="prem-val">2</div></div>
+          <div class="prem-item"><div class="prem-key">Bandejas por Baker GM</div><div class="prem-val">1</div></div>
+          <div class="prem-item"><div class="prem-key">Volume GM = Total × (1 − %Large)</div><div class="prem-val">Automático</div></div>
+          <div class="prem-item"><div class="prem-key">Pico = Volume × %Pico</div><div class="prem-val">Automático</div></div>
+          <div class="prem-item"><div class="prem-key">Arredondamento</div><div class="prem-val">Sempre ↑</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-sticky">
+      <div class="card">
+        <div class="result-header">
+          <div class="r-label">Resumo de equipamentos</div>
+          <div class="r-title">Cross Docking — XD</div>
+        </div>
+        <div id="result-area">
+          <div class="empty-state">
+            <div class="empty-icon">🔢</div>
+            <p>Preencha os parâmetros e clique em <strong>Calcular</strong> para ver os equipamentos necessários.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function syncRange(sliderId, hiddenId, labelId, suffix) {
+  const v = document.getElementById(sliderId).value;
+  document.getElementById(hiddenId).value = v;
+  document.getElementById(labelId).textContent = v + suffix;
+}
+
+function n(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function pct(id) { return n(id) / 100; }
+
+function calcular() {
+  const volTotal    = n('volumeTotal');
+  const pVol        = pct('pctVolumoso');
+  const bkGM        = n('pacotesBakerGM');
+  const bkLarge     = n('pacotesBakerLarge');
+  const pPico       = pct('pctPico');
+  const qtdDock     = n('qtdDock');
+  const qtdPlaza    = n('qtdPlaza');
+
+  const i1f3x2 = n('ilha1f3x2');
+  const i2f3x2 = n('ilha2f3x2');
+  const i1f2x2 = n('ilha1f2x2');
+  const i2f2x2 = n('ilha2f2x2');
+
+  const ondas = [1,2,3,4,5].map(i => ({
+    ilhas: n('onda'+i+'ilhas'),
+    baker: n('onda'+i+'baker')
+  }));
+
+  const volBulky    = n('volBulky');
+  const pBulky      = pct('pctBulky');
+  const prodCarrito = n('prodCarrito');
+
+  const volGM    = volTotal * (1 - pVol);
+  const volLarge = volTotal * pVol;
+
+  const volGMpico    = volGM * pPico;
+  const volLargepico = volLarge * pPico;
+
+  const qtdBakerGM    = Math.ceil(volGMpico / bkGM);
+  const qtdBakerLarge = Math.ceil(volLargepico / bkLarge);
+  const qtdBandejas   = qtdBakerGM * 1;
+
+  const flow2x2Inhub  = qtdDock * 1;
+  const toboga        = qtdPlaza * 1;
+  const flow3x2       = (i1f3x2 * 1) + (i2f3x2 * 2);
+  const flow2x2Sorteo = (i1f2x2 * 1) + (i2f2x2 * 2);
+
+  let totalFlowLarge = 0;
+  ondas.forEach(o => {
+    if (o.ilhas > 0) {
+      const inducao = 2;
+      const sorteo  = Math.ceil(o.baker / 2);
+      totalFlowLarge += o.ilhas * (inducao + sorteo);
+    }
+  });
+
+  const bulkyPico    = volBulky * pPico;
+  const bulkyInterno = bulkyPico * pBulky;
+  const qtdCarrito   = Math.ceil(bulkyInterno / prodCarrito);
+
+  const equipamentos = [
+    { grupo: 'Inhub — Dock / Muelles', nome: 'Flow 2×2', proc: 'Inhub - Entrada',  qty: flow2x2Inhub },
+    { grupo: 'Inhub — Interno',        nome: 'Tobogã',   proc: 'Inhub - Interno',  qty: toboga },
+    { divider: true },
+    { grupo: 'Movimentação / Buffer',  nome: 'Baker GM',   proc: 'Inhub - Buffer', qty: qtdBakerGM },
+    { grupo: 'Movimentação / Buffer',  nome: 'Baker Large',proc: 'Inhub - Buffer', qty: qtdBakerLarge },
+    { grupo: 'Movimentação / Buffer',  nome: 'Bandejas',   proc: 'Inhub - Buffer', qty: qtdBandejas },
+    { divider: true },
+    { grupo: 'Sorteo GM',              nome: 'Flow 3×2',  proc: 'Sorteo GM',       qty: flow3x2 },
+    { grupo: 'Sorteo GM',              nome: 'Flow 2×2',  proc: 'Sorteo GM',       qty: flow2x2Sorteo },
+    { divider: true },
+    { grupo: 'Sorteo Large',           nome: 'Flow Large',proc: 'Sorteo Large',    qty: totalFlowLarge },
+    { divider: true },
+    { grupo: 'Carga / Descarga',       nome: 'Carrito de elevação', proc: 'BULKY', qty: qtdCarrito },
+  ];
+
+  let html = '<div class="animate">';
+
+  const hasZero = equipamentos.filter(e => !e.divider && e.qty === 0).length > 0;
+  if (hasZero) {
+    html += `<div class="alert info" style="margin:1rem 1.25rem 0">
+      ℹ️ Equipamentos com valor 0 indicam que o parâmetro correspondente está zerado nos inputs.
+    </div>`;
+  }
+
+  html += '<div class="equip-list">';
+
+  let lastGrupo = '';
+  equipamentos.forEach(e => {
+    if (e.divider) {
+      html += '<div class="equip-divider"></div>';
+      return;
+    }
+    if (e.grupo !== lastGrupo) {
+      html += `<div class="equip-section-label">${e.grupo}</div>`;
+      lastGrupo = e.grupo;
+    }
+    html += `
+      <div class="equip-row">
+        <div class="equip-info">
+          <div class="equip-name">${e.nome}</div>
+          <div class="equip-proc">${e.proc}</div>
+        </div>
+        <div class="equip-qty ${e.qty === 0 ? 'zero' : ''}">${e.qty}</div>
+      </div>`;
+  });
+
+  html += '</div></div>';
+  document.getElementById('result-area').innerHTML = html;
+}
+
+function togglePremissas(btn) {
+  const body = document.getElementById('premissas-body');
+  const icon = document.getElementById('prem-icon');
+  body.classList.toggle('open');
+  icon.textContent = body.classList.contains('open') ? '▲' : '▼';
+  btn.style.borderRadius = body.classList.contains('open') ? '10px 10px 0 0' : '10px';
+}
+
+window.addEventListener('load', calcular);
+</script>
+</body>
+</html>
